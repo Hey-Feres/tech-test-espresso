@@ -1,2 +1,4 @@
-<!-- <%= flash[:recaptcha_error] %> -->
-<!-- <%= recaptcha_tags %> -->
+<% if Rails.env.production? %>
+	<%= flash[:recaptcha_error] %>
+	<%= recaptcha_tags %>
+<% end %>

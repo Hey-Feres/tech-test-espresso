@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'devise/sessions', registrations: 'devise/registrations' }
+  devise_for :users, controllers: {
+    sessions: 'devise/sessions',
+    registrations: 'devise/registrations'
+  }
 
   get '/mfa/verification_form', to: 'mfa#verification_form'
   post '/mfa/verify', to: 'mfa#verify'

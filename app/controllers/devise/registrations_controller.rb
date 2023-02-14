@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class Devise::RegistrationsController < DeviseController
-  prepend_before_action :require_no_authentication, only: [:new, :create, :cancel]
-  prepend_before_action :authenticate_scope!, only: [:edit, :update, :destroy]
-  prepend_before_action :set_minimum_password_length, only: [:new, :edit]
+  if Rails.env.production?
+    prepend_before_action :check_captcha, only: %i[create]
+  end
+  prepend_before_action :require_no_authentication, only: %i[new create cancel]
+  prepend_before_action :authenticate_scope!, only: %i[edit update destroy]
+  prepend_before_action :set_minimum_password_length, only: %i[new edit]
 
   before_action :validate_mfa!, only: %i[edit update destroy]
 
@@ -148,6 +151,19 @@ class Devise::RegistrationsController < DeviseController
   end
 
   private
+
+  def check_captcha
+    return if verify_recaptcha
+
+    self.resource = resource_class.new sign_up_params
+    resource.validate
+    set_minimum_password_length
+
+    respond_with_navigational(resource) do
+      flash.discard(:recaptcha_error)
+      render :new
+    end
+  end
 
   def set_flash_message_for_update(resource, prev_unconfirmed_email)
     return unless is_flashing_format?

@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class Devise::SessionsController < DeviseController
-  prepend_before_action :require_no_authentication, only: [:new, :create]
-  prepend_before_action :allow_params_authentication!, only: :create
-  prepend_before_action :verify_signed_out_user, only: :destroy
-  prepend_before_action(only: [:create, :destroy]) { request.env["devise.skip_timeout"] = true }
+  if Rails.env.production?
+    prepend_before_action :check_captcha, only: %i[create]
+  end
+  prepend_before_action :require_no_authentication, only: %i[new create]
+  prepend_before_action :allow_params_authentication!, only: %i[create]
+  prepend_before_action :verify_signed_out_user, only: %i[destroy]
+  prepend_before_action(only: %i[create destroy]) { request.env["devise.skip_timeout"] = true }
 
   # GET /resource/sign_in
   def new
@@ -58,6 +61,17 @@ class Devise::SessionsController < DeviseController
   end
 
   private
+
+  def check_captcha
+    return if verify_recaptcha
+
+    self.resource = resource_class.new sign_in_params
+
+    respond_with_navigational(resource) do
+      flash.discard(:recaptcha_error)
+      render :new
+    end
+  end
 
   # Check if there is no signed in user before doing the sign out.
   #
