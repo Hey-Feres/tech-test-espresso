@@ -17,23 +17,15 @@ gem 'webpacker', '~> 5.0'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
-
+# Flexible authentication solution for Rails with Warden
 gem 'devise'
-
+# Helpers for the reCAPTCHA API
 gem 'recaptcha'
-
+# Works for both HOTP and TOTP, and includes QR Code provisioning
 gem 'rotp'
-
+# rqrcode is a library for encoding QR Codes
 gem 'rqrcode'
 
 group :development, :test do
