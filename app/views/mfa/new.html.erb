@@ -1,0 +1,23 @@
+<%= render 'layouts/header' %>
+
+<% if current_user.multi_factor_authenticable %>
+	<%= form_with(url: '/mfa/update', method: 'put') do |f| %>
+		<button type="submit" class="btn btn-danger">Remove MFA</button>
+	<% end %>
+<% else %>
+	<%= form_with(url: '/mfa/create') do |f| %>
+		<div class="form-group">
+			<center>
+				<%= render_qrcode %>
+			</center>
+	  </div>
+
+	  <div class="form-group">
+	    <%= f.text_field :code, class: 'form-control', placeholder: 'Code' %>
+	  </div>
+
+	  <div class="form-group">
+	    <button type="submit" class="btn btn-dark">Save</button>
+	  </div>
+	<% end %>
+<% end %>
