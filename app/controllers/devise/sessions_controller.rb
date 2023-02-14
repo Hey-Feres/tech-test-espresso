@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Devise::SessionsController < DeviseController
-  if Rails.env.production?
-    prepend_before_action :check_captcha, only: %i[create]
-  end
+  # prepend_before_action :check_captcha, only: %i[create]
   prepend_before_action :require_no_authentication, only: %i[new create]
   prepend_before_action :allow_params_authentication!, only: %i[create]
   prepend_before_action :verify_signed_out_user, only: %i[destroy]
