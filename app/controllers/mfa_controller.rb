@@ -24,6 +24,7 @@ class MfaController < ApplicationController
     totp = ROTP::TOTP.new("base32secret3232", issuer: "Espresso Tech Test")
 
     if params[:code] == totp.now
+      cookies[:mfa_verified] = "true"
       current_user.update(multi_factor_authenticable: true)
       redirect_to mfa_new_path, notice: 'MFA Ready!'
     else
