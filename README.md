@@ -15,6 +15,17 @@ Para testar em produção deve ser usado o email `walter@espressoapp.com.br` par
 
 [Acessar Production Demo](https://salty-basin-86770.herokuapp.com)
 
+### Execução Local
+
+```bash
+bundle
+rails db:create db:migrate
+gem install mailcatcher
+mailcatcher --foreground
+```
+
+Obs: O mailcatcher deve 
+
 #
 
 ### O que foi feito?
