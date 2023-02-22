@@ -18,7 +18,6 @@ class Devise::RegistrationsController < DeviseController
   # POST /resource
   def create
     build_resource(sign_up_params)
-
     resource.save
     yield resource if block_given?
     if resource.persisted?
@@ -70,7 +69,7 @@ class Devise::RegistrationsController < DeviseController
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     set_flash_message! :notice, :destroyed
     yield resource if block_given?
-    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name), status: Devise.responder.redirect_status }
+    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name), status: 200 }
   end
 
   # GET /resource/cancel

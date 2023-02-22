@@ -31,6 +31,14 @@ gem 'rqrcode'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # BDD for Ruby
+  gem 'rspec-rails'
+  # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality
+  gem 'shoulda-matchers'
+  # Factory Bot provides a framework and DSL for defining and using factories
+  gem 'factory_bot_rails'
+  # Faker, a port of Data::Faker from Perl, is used to easily generate fake data
+  gem 'faker'
 end
 
 group :development do
