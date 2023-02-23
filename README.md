@@ -9,6 +9,14 @@
 
 #
 
+### Testes
+
+```bash
+rspec
+```
+
+#
+
 ### Production
 
 Para testar em produção deve ser usado o email `walter@espressoapp.com.br` para cadastro. O disparo de emails é feito usando o sandbox do Mailgun, que exige a adição de Destinatários Autorizados para testes, e foi autorizado apenas o email acima.
@@ -51,8 +59,6 @@ Devido ao prazo de execução do teste e bugs durante o desenvolvimento, o teste
 
 - Implementação do Rubocop
 	- Motivo: Deixei por último e não me restou muito tempo para refatorar o código visando satisfazer as demandas do linter.
-- Implementação de Testes
-	- Motivo: Nunca implementei testes para UIs, apenas para APIs. A implementação me custaria tempo de estudo prévio para execução da implementação.
 - Integração de Captcha
 	- Motivo: Por algum motivo que não pude descobrir, o captcha sempre se comportava como "Inválido". O código no entanto está presente em:
 		- `config/initializers/recaptcha.rb`

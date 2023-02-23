@@ -19,10 +19,36 @@ RSpec.describe Devise::RegistrationsController, type: :controller do
       end
     end
 
-    describe 'with invalid password' do
+    describe 'with unmacthing password confirmation' do
       it 'does not add an user' do
       	old_count = User.count
-        post :create, params: {user:{email:'bruno@test.com', password: '123456789', password_confirmation: '123456789'}}
+        post :create, params: {user:{email:'bruno@test.com', password: 'Aa##123456789', password_confirmation: 'Bb##123456789'}}
+        User.count.should eq old_count
+      end
+    end
+
+    describe 'with invalid password' do
+      it 'missing uppercased char does not add an user' do
+      	old_count = User.count
+        post :create, params: {user:{email:'bruno@test.com', password: 'aa##123456789', password_confirmation: 'aa##123456789'}}
+        User.count.should eq old_count
+      end
+
+      it 'missing lowercased char does not add an user' do
+      	old_count = User.count
+        post :create, params: {user:{email:'bruno@test.com', password: 'AA##123456789', password_confirmation: 'AA##123456789'}}
+        User.count.should eq old_count
+      end
+
+      it 'missing special char does not add an user' do
+      	old_count = User.count
+        post :create, params: {user:{email:'bruno@test.com', password: 'Aa123456789', password_confirmation: 'Aa123456789'}}
+        User.count.should eq old_count
+      end
+
+      it 'missing number chart does not add an user' do
+      	old_count = User.count
+        post :create, params: {user:{email:'bruno@test.com', password: 'Abaa#sdaasd@', password_confirmation: 'Abaa#sdaasd@'}}
         User.count.should eq old_count
       end
     end

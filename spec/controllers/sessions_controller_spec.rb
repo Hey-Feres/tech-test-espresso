@@ -22,7 +22,7 @@ RSpec.describe Devise::SessionsController, type: :controller do
 
     describe 'with incorrect password' do
       it 'redirects back to login form' do
-        post :create, params: {user: {email: user.email, password: '123123123132', remember_me: 0}}
+        post :create, params: {user: {email: user.email, password: '123123123132'}}
         response.should redirect_to new_user_session_path
       end
     end
